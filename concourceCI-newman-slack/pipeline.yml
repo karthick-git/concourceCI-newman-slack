@@ -1,0 +1,17 @@
+---
+resources:
+- name: newman-repo
+  type: git
+  source:
+    uri: <github repo url>
+    branch: master
+    private_key: <abc>
+              
+jobs:
+- name: test-rest-api
+  public: true
+  plan:
+  - get: newman-repo
+  - task: test-api
+    file: newman-repo/newman/newman-task.yml
+    params: { "COLLECTION_URL": <Postman collection URL>" }
