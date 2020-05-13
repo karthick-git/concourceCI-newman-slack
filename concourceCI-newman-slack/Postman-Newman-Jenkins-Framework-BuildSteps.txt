@@ -1,9 +1,11 @@
 Install postman
-Install node
-npm comes preinstalled with node
-node --version
-npm --version
-npm install -g newman
+Install Node.js. NPM will be installed along with it.(Official link below)
+https://www.npmjs.com/get-npm
+Command to confirm whether Node and NPM has been installed successfully (NPM and Node should be set in PATH environment variable, so that it can be accessed from any location)
+node -v
+npm -v
+npm install -g newman to install globally
+to install to a specific folder : npm init-->npm install newman --save
 install jenkins
 install nodejs plugin for jenkins
 install java SDK 8+
@@ -92,5 +94,77 @@ https://restcountries.eu
 https://petstore.swagger.io
 Follow the weekly blog thinkingtester.com
 
+Useful info:
+To export the report as a .txt file
+newman run abc_collection.json /all > newman_report.txt
 
+To generate xunit report
+npm i -g xunit-viewer
+newman run ${yourCollectionPath}\${yourCollectionName}.json -r cli,junit
+xunit-viewer --results=newman --output=test_results.html
 
+If a request demands new authorization token each time it's sent, running the requests as a collection might be a little tricky. 
+Postman provides us an option to parameterize the access token generation process by adding a pre-request script and environment variables.
+Parameterize the authorization at the collection level:
+let tokenUrl = 'url';
+let clientId = '<>';
+let clientSecret = '<>';
+let scope = '<>';
+ 
+let getTokenRequest = {
+    method: 'POST',
+    url: tokenUrl,
+    auth: {
+        type: "basic",
+        basic: [
+            { key: "username", value: username },
+            { key: "password", value: password }
+        ]
+    },
+    body: {
+        mode: 'urlencoded',
+        urlencoded: [
+            { key: 'grant_type', value: 'username' },
+            { key: 'scope', value: scope }
+        ]
+ 
+    }
+     
+};
+ 
+pm.sendRequest(getTokenRequest, (err, response) => {
+    let jsonResponse = response.json(),
+        newAccessToken = jsonResponse.access_token;
+ 
+    console.log({ err, jsonResponse, newAccessToken })
+     
+    pm.globals.set('accessToken', newAccessToken);
+    pm.environment.set('accessToken', newAccessToken);
+    pm.variables.set('accessToken', newAccessToken);
+});
+
+Dummy Package.json
+{
+  "name": "dummy",
+  "version": "1.0.0",
+  "description": "Sample npm project",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": " <<name>",
+  "license": "ISC",
+  "dependencies": {
+    "newman": "^4.5.4"
+  }
+}
+
+Make some modifications in the package.json file
+Remove the "main"
+Corresponding to the test value, add the collection name
+Remove license details and save the file
+
+To remove useless packages
+rm -rf -- node_modules/
+
+fly -t eom sp -c pipeline.yml -p <name of the pipeline>  – to build a pipeline using the resources and jobs mentioned in the pipeline.yml file.
