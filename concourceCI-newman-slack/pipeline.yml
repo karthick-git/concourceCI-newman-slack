@@ -14,4 +14,4 @@ jobs:
   - get: newman-repo
   - task: test-api
     file: newman-repo/newman/newman-task.yml
-    params: { "COLLECTION_URL": <Postman collection URL>" }
+    params: { "COLLECTION_URL": https://raw.githubusercontent.com/karthick-git/concourceCI-newman-slack/master/concourceCI-newman-slack/newmanTest.postman_collection.json" }
