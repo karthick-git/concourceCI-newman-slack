@@ -3,9 +3,9 @@ resources:
 - name: newman-repo
   type: git
   source:
-    uri: <github repo url>
+    uri: https://github.com/karthick-git/concourceCI-newman-slack.git
     branch: master
-    private_key: <abc>
+    #private_key: <abc>
               
 jobs:
 - name: test-rest-api
