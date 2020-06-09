@@ -1,5 +1,8 @@
 language: node_js
 node_js:
   - 0.8
+
+before_install:
+  - chmod +x run-newman.sh
   
 script: ./run-newman.sh
