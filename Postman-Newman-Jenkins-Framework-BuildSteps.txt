@@ -98,6 +98,10 @@ Useful info:
 To export the report as a .txt file
 newman run abc_collection.json /all > newman_report.txt
 
+To generate HTML report
+npm install -g newman-reporter-htmlextra
+newman run collection.json -r htmlextra
+
 To generate xunit report
 npm i -g xunit-viewer
 newman run ${yourCollectionPath}\${yourCollectionName}.json -r cli,junit
@@ -167,4 +171,4 @@ Remove license details and save the file
 To remove useless packages
 rm -rf -- node_modules/
 
-fly -t eom sp -c pipeline.yml -p <name of the pipeline>  – to build a pipeline using the resources and jobs mentioned in the pipeline.yml file.
+fly -t eom sp -c pipeline.yml -p <name of the pipeline>  â€“ to build a pipeline using the resources and jobs mentioned in the pipeline.yml file.
